@@ -1,0 +1,32 @@
+@import url('bootstrap.css');
+
+body {
+    background-color: var(--gray-dark);
+}
+
+@media only screen and (max-width: 990px) {
+    .navbar-nav {
+        flex-direction: row;
+        overflow-x:auto;
+    }
+    .navbar-nav li{
+        padding: 0 8px;
+
+    }
+}
+@media only screen and (max-width: 579px){
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+    }
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav li {
+        padding: 0 8px;
+
+    }
+}

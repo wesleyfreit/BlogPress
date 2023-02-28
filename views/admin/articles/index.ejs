@@ -1,0 +1,61 @@
+<%- include('../../partials/header.ejs') %>
+
+<body>
+    <%- include ('../../partials/navbar.ejs') %>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Artigos</h3>
+                <a class="btn btn-success" href="/admin/articles/new">Criar novo Artigo</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-sm">
+                    <caption>Lista de artigos</caption>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>TÍTULO</th>
+                            <th>SLUG</th>
+                            <th>CATEGORIA</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% articles.forEach((article) => { %>
+                            <tr>
+                                <td> <%= article.id %> </td>
+                                <td> <%= article.title %> </td>
+                                <td> <%= article.slug %> </td>
+                                <td> <%= article.category.title %> </td>
+                                <td>
+                                    <form action="/admin/articles/edit" method="post" style="display:inline">
+                                        <input type="hidden" name="id" value="<%= article.id %>">
+                                        <button class="btn btn-warning">Editar</button>
+                                    </form>
+
+                                    <form action="/admin/articles/delete" method="post" style="display:inline" 
+                                    onsubmit="confirmarDelecao(event, this)">
+                                        <input type="hidden" name="id" value="<%= article.id %>">
+                                        <button class="btn btn-danger">Deletar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include ('../../partials/footer.ejs') %>
+
+<script>
+    const confirmarDelecao = (event, form) => {
+        event.preventDefault();
+        const decision = confirm("Você tem certeza que deseja deletar este artigo?");
+        if (decision)
+            form.submit();
+    }
+</script>

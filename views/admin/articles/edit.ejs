@@ -1,0 +1,69 @@
+<%- include('../../partials/header.ejs') %>
+
+<body>
+    <%- include ('../../partials/navbar.ejs') %>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Edição de Artigo</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/admin/articles/update">
+                    <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo" value="<%= article.title %>"
+                        required>
+                    <input type="hidden" name="id" value="<%= article.id %>">
+                    <br>
+                    <textarea id="article" class="form-control" name="body"
+                        placeholder="Escreva o artigo aqui"></textarea>
+                    <br>
+                    <label for="category">Selecione a Categoria</label>
+                    <select name="category" class="form-control" required>
+                        <% categories.forEach(category=> { %>
+                            <% if( article.categoryId == category.id ){ %>
+                                <option value="<%= category.id %>" selected><%= category.title %></option>
+                            <% } else { %>
+                                <option value="<%= category.id %>"><%= category.title %></option>
+                            <% } %>
+                            <% }); %>
+                    </select>
+                    <br>
+                    <button class="btn btn-primary">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="content" style="display: none">
+        <%- article.body %>
+
+    </div>
+</body>
+
+<%- include ('../../partials/footer.ejs') %>
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            language: 'pt_BR',
+            selector: '#article',
+            plugins: [
+                'advlist',
+                'autolink',
+                'link',
+                'image',
+                'lists',
+                'preview',
+                'searchreplace',
+                'wordcount',
+                'fullscreen',
+                'insertdatetime',
+                'media',
+                'save',
+                'table',
+                'emoticons',
+            ],
+            auto_focus: 'element1',
+            init_instance_callback: () => {
+                tinymce.get('article').setContent($("#content").html())
+            }
+        });
+    </script>

@@ -1,5 +1,6 @@
 # BlogPress
- Trabalho criado à partir do curso de formação em NodeJS
+### This project was created from the nodejs training course
+#### this project is working with view engine ejs, bootstrap and a WYSIWYG editor to editing texts
 
 with node and npm installed run the code
 ```bash
@@ -10,4 +11,6 @@ after run
 ```bash
 node index.js
 ```
-this project is working with view engine ejs
+
+
+

@@ -10,3 +10,4 @@ after run
 ```bash
 node index.js
 ```
+this project is working with view engine ejs

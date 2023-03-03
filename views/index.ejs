@@ -18,12 +18,17 @@
                     <h3> <%= article.title %> </h3>
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-info" href="/<%= article.slug %>">Ler Artigo</a>
+                    <a class="btn btn-info" href="/articles/<%= article.slug %>">Ler Artigo</a>
                 </div>
             </div>
             <br>
         <% }); %>
-        
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-info" href="/articles/page/2" style="float:right">Próxima Página >></a>  
+            </div>
+        </div>
+        <hr class="bg-secondary">
     </div>
 </body>
 

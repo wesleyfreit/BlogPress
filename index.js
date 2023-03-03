@@ -1,14 +1,18 @@
 const express = require('express');
+const session = require('express-session');
 const server = express();
 const port = 8080;
 const connection = require('./database/database');
 
 const articlesController = require('./articles/ArticlesController');
 const categoriesController = require('./categories/CategoriesController');
+const usersController = require('./users/UserControler');
 
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const User = require('./users/User');
 
+//Configuração da conexão com banco de dados
 connection
     .authenticate()
     .then(() => {
@@ -18,19 +22,35 @@ connection
         console.log(msgErro);
     });
 
+//Utilizando o body-parser express
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 
+//Configuração para utilizar da sessão de usuário
+server.use(session({
+    secret: 'sadd1sad65w4sf41%*&(#*(fd4f4fs5',
+    resave: true, 
+    saveUninitialized: true,
+    cookie: {
+        maxAge: (1000 * 60 * 60 * 4)
+    }
+}));
+
+//Utilizando as rotas criadas nos arquviso referentes a cada utilização
 server.use('/', categoriesController); 
 server.use('/', articlesController);
+server.use('/', usersController);
 
-server.set('view engine', 'ejs');
-
+//Utilizando a pasta public
 server.use(express.static('public'));
+
+//Setando o motor de visualização
+server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
     Article.findAll({
-        order: [['id', 'desc']]
+        order: [['id', 'desc']],
+        limit: 4
     }).then(articles => {
         Category.findAll({
             order: [['title', 'asc']]
@@ -44,7 +64,7 @@ server.get('/', (req, res) => {
     });
 });
 
-server.get('/:slug', (req, res) => {
+server.get('/articles/:slug', (req, res) => {
     const slug = req.params.slug;
     Article.findOne({
         where: {
@@ -55,7 +75,7 @@ server.get('/:slug', (req, res) => {
             Category.findAll({
                 order: [['title', 'asc']]
             }).then(categories => {
-                res.render('article', {
+                res.render('read', {
                     article: article,
                     categories: categories
                 });
@@ -95,6 +115,10 @@ server.get('/category/:slug', (req, res) => {
         res.redirect('/');
     });
 });
+
+server.get('/:some_think', (req, res) => {
+    res.render('errorPage');
+})
 
 server.listen(port, () => {
     console.log(`Running in http://localhost:${port}`);

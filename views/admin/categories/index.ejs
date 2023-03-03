@@ -1,65 +1,65 @@
 <%- include('../../partials/header.ejs') %>
 
-    <body>
-        <%- include ('../../partials/navbar.ejs') %>
-            <br>
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Categorias</h3>
-                        <a class="btn btn-success" href="/admin/categories/new">Criar nova Categoria</a>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover table-sm">
-                            <caption>Lista de categorias</caption>
-                            <thead class="thead-dark">
+<body>
+    <%- include ('../../partials/navbar.ejs') %>
+        <br>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Categorias</h3>
+                    <a class="btn btn-success" href="/admin/categories/new">Criar nova Categoria</a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover table-sm">
+                        <caption>Lista de categorias</caption>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>TÍTULO</th>
+                                <th>SLUG</th>
+                                <th>AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% categories.forEach((category)=> { %>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>TÍTULO</th>
-                                    <th>SLUG</th>
-                                    <th>AÇÕES</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% categories.forEach((category)=> { %>
-                                    <tr>
-                                        <td>
-                                            <%= category.id %>
-                                        </td>
-                                        <td>
-                                            <%= category.title %>
-                                        </td>
-                                        <td>
-                                            <%= category.slug %>
-                                        </td>
-                                        <td>
-                                            <form action="/admin/categories/edit" method="post" style="display:inline">
-                                                <input type="hidden" name="id" value="<%= category.id %>">
-                                                <button class="btn btn-warning">Editar</button>
-                                            </form>
+                                    <td>
+                                        <%= category.id %>
+                                    </td>
+                                    <td>
+                                        <%= category.title %>
+                                    </td>
+                                    <td>
+                                        <%= category.slug %>
+                                    </td>
+                                    <td>
+                                        <form action="/admin/categories/edit" method="post" style="display:inline">
+                                            <input type="hidden" name="id" value="<%= category.id %>">
+                                            <button class="btn btn-warning">Editar</button>
+                                        </form>
 
-                                            <form action="/admin/categories/delete" method="post" style="display:inline"
-                                                onsubmit="confirmarDelecao(event, this)">
-                                                <input type="hidden" name="id" value="<%= category.id %>">
-                                                <button class="btn btn-danger">Deletar</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
+                                        <form action="/admin/categories/delete" method="post" style="display:inline"
+                                            onsubmit="confirmarDelecao(event, this)">
+                                            <input type="hidden" name="id" value="<%= category.id %>">
+                                            <button class="btn btn-danger">Deletar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-    </body>
+        </div>
+</body>
 
-    <%- include ('../../partials/footer.ejs') %>
+<%- include ('../../partials/footer.ejs') %>
 
-        <script>
-            const confirmarDelecao = (event, form) => {
-                event.preventDefault();
-                const decision = confirm("Você tem certeza que deseja deletar esta categoria?");
-                if (decision)
-                    form.submit();
-            }
-        </script>
+<script>
+    const confirmarDelecao = (event, form) => {
+        event.preventDefault();
+        const decision = confirm("Você tem certeza que deseja deletar esta categoria?");
+        if (decision)
+            form.submit();
+    }
+</script>
